@@ -9,8 +9,8 @@ services:
       - FLASK_APP=src/main.py
       - FLASK_ENV=development
       - FLASK_DEBUG=1
-      - SQLALCHEMY_DATABASE_URI=mysql+mysqldb://flaskuser:flaskpassword@db:3306/flaskdb
-    command: ["/bin/bash", "-c", "sleep 10 & alembic upgrade head && flask run --host=0.0.0.0"]
+      - SQLALCHEMY_DATABASE_URI=mysql://flaskuser:flaskpassword@db:3306/flaskdb
+    command: ["/bin/bash", "-c", "sleep 20 & alembic upgrade head && flask run --host=0.0.0.0"]
     depends_on:
       - db
     volumes:
@@ -20,10 +20,10 @@ services:
     image: mysql/mysql-server:8.0.28-1.2.7-server
     restart: always
     environment:
-      MYSQL_DATABASE: 'flaskdb'
-      MYSQL_USER: 'flaskuser'
-      MYSQL_PASSWORD: 'flaskpassword'
-      MYSQL_ROOT_PASSWORD: 'rootpassword'
+      - MYSQL_DATABASE=flaskdb
+      - MYSQL_USER=flaskuser
+      - MYSQL_PASSWORD=flaskpassword
+      - MYSQL_ROOT_PASSWORD=rootpassword
     ports:
       - "3306:3306"
     volumes:
